@@ -1,0 +1,14 @@
+POST /auth/login => { username, password }
+POST /auth/register => { username, password }
+
+
+GET /invoice => [ all invoices ]
+GET /invoice/:id => { invoiceId, invoiceName, items[{name, cost, quantity}, invoiceDate }
+
+POST /invoice => { customerId, invoiceName, items[{name, cost, quantity}, invoiceDate] }
+
+
+GET /customer = [ all customers ]
+GET /customer/:id => { customerId, customerName, phone, billingAddress, companyName }
+
+POST /customer => { customerId, customerName, phone, billingAddress, companyName ] }
