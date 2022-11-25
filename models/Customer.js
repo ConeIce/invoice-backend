@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const Customer = mongoose.Schema({
   name: { type: String, required: true },
@@ -8,6 +8,13 @@ const Customer = mongoose.Schema({
   state: { type: String, required: true },
   country: { type: String, required: true },
   companyName: { type: String },
+
+  invoices: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "invoice",
+    },
+  ],
 });
 
 export default mongoose.model("Customer", Customer);

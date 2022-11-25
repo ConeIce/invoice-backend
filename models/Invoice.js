@@ -1,11 +1,16 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
+const Item = mongoose.Schema({
+  name: { type: String, required: true },
+  quantity: { type: String, required: true },
+  cost: { type: String, required: true },
+});
 
 const Invoice = mongoose.Schema({
-  customer: { type: String, required: true }, // we need this to be a valid cust. relations??
+  customerId: { type: Schema.Types.ObjectId, ref: "Customer" }, // all invoices are and must be mapped to a customer
   name: { type: String, required: true },
   date: { type: Date, required: true },
-  items: { type: String, required: true }, // we need a list for this
-  totalCost: { type: Number, required: true },
+  items: [Item],
 });
 
 export default mongoose.model("Invoice", Invoice);
