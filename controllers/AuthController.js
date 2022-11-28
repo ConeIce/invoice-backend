@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import passport from "passport";
 
 export default {
   login: (req, res, next) => {
