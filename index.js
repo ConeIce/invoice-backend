@@ -18,12 +18,12 @@ await mongoose.connect(process.env.CONNECTION_URL);
 app.use(express.json());
 app.use(
   session({
-    secret: "secretcode",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
   })
 );
-app.use(cookieParser("secretcode"));
+app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(passport.initialize());
 app.use(passport.session());
 // require("./passportConfig")(passport);
