@@ -10,6 +10,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import AuthRoute from "./routes/auth.js";
+import CustomerRoute from "./routes/customer.js";
+import InvoiceRoute from "./routes/invoice.js";
 
 const app = express();
 const PORT = 4000;
@@ -28,6 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 // require("./passportConfig")(passport);
 import passportConfig from "./passportConfig.js";
+import isLoggedIn from "./isLoggedIn.js";
 passportConfig(passport);
 
 app.get("/", (req, res) => {
@@ -35,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", AuthRoute);
-// app.use("/customers", CustomerRoute);
-// app.use("/invoice", InvoiceRoute);
+app.use("/customer", isLoggedIn, CustomerRoute);
+app.use("/invoice", isLoggedIn, InvoiceRoute);
 
 app.listen(PORT, () => console.log(`Server is running at PORT: ${PORT}`));
