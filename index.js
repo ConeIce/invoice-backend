@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import passport from "passport";
 import passportLocal from "passport-local";
@@ -17,6 +18,13 @@ const app = express();
 const PORT = 4000;
 
 await mongoose.connect(process.env.CONNECTION_URL);
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(
   session({
