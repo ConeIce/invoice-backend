@@ -2,7 +2,7 @@ POST /auth/login => { username, password }
 POST /auth/register => { username, password }
 
 GET /customer = [ all customers ]
-GET /customer/:id => { customerId, customerName, phone, billingAddress, companyName }
+GET /customer/:id => { id, name, email, phone, city, state, country, companyName }
 
 POST /customer =>
     Request: { name, email, phone, city, state, country, companyName }
