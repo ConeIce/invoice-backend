@@ -1,6 +1,5 @@
 import User from "./models/User.js";
 import bcrypt from "bcryptjs";
-// const localStrategy = require("passport-local").Strategy;
 import passportLocal from "passport-local";
 const localStrategy = passportLocal.Strategy;
 
@@ -28,6 +27,7 @@ export default function (passport) {
   passport.deserializeUser((id, cb) => {
     User.findOne({ _id: id }, (err, user) => {
       const userInformation = {
+        id: user._id,
         username: user.username,
       };
       cb(err, userInformation);
