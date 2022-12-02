@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const Customer = mongoose.Schema({
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: Number, required: true },
