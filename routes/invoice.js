@@ -8,4 +8,8 @@ router.get("/", (req, res) => {
   controller.getAll(req, res);
 });
 
+router.post("/", (req, res) => {
+  controller.post(req, res);
+});
+
 export default router;
