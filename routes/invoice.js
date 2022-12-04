@@ -12,7 +12,7 @@ router.get("/:id", (req, res) => {
   controller.getByID(req, res);
 });
 
-router.post("/", (req, res) => {
+router.post("/:customerId", (req, res) => {
   controller.post(req, res);
 });
 
