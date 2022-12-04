@@ -8,4 +8,12 @@ router.get("/", (req, res) => {
   controller.getAll(req, res);
 });
 
+router.get("/:id", (req, res) => {
+  controller.getByID(req, res);
+});
+
+router.post("/:customerId", (req, res) => {
+  controller.post(req, res);
+});
+
 export default router;
