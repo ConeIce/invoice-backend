@@ -4,6 +4,11 @@ import controller from "../controllers/InvoiceController.js";
 const router = express.Router();
 
 router.get("/", (req, res) => {
+  if (req.query.customerId) {
+    controller.getByCustomerId(req, res);
+    return;
+  }
+
   controller.getAll(req, res);
 });
 

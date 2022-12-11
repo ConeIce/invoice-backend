@@ -16,6 +16,12 @@ export default {
       }
     );
   },
+  getByCustomerId: async (req, res) => {
+    const invoices = await Invoice.find({
+      customerId: req.query.customerId,
+    });
+    res.json(invoices);
+  },
   post: async (req, res) => {
     req.body["userId"] = req.user.id;
     const newInvoice = new Invoice(req.body);
