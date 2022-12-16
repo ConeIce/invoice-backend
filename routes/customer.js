@@ -15,4 +15,8 @@ router.post("/", (req, res) => {
   controller.post(req, res);
 });
 
+router.put("/", (req, res) => {
+  controller.put(req, res);
+});
+
 export default router;

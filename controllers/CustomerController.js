@@ -19,4 +19,11 @@ export default {
 
     res.json(savedCustomer);
   },
+  put: async (req, res) => {
+    const editedCustomer = await Customer.updateOne(
+      { _id: req.body._id },
+      req.body
+    );
+    res.json(editedCustomer);
+  },
 };
