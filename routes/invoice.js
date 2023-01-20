@@ -16,6 +16,10 @@ router.get("/:id", (req, res) => {
   controller.getByID(req, res);
 });
 
+router.get("/:id/download", (req, res) => {
+  controller.download(req, res);
+});
+
 router.post("/", (req, res) => {
   controller.post(req, res);
 });

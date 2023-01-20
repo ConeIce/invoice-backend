@@ -26,11 +26,7 @@ export default function (passport) {
   });
   passport.deserializeUser((id, cb) => {
     User.findOne({ _id: id }, (err, user) => {
-      const userInformation = {
-        id: user._id,
-        username: user.username,
-      };
-      cb(err, userInformation);
+      cb(err, user);
     });
   });
 }

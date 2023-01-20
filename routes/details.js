@@ -1,14 +1,14 @@
 import express from "express";
-import controller from "../controllers/UserController.js";
+import controller from "../controllers/DetailsController.js";
 
 const router = express.Router();
 
-router.put("/gst", (req, res) => {
-  controller.postGST(req, res);
+router.put("/", (req, res) => {
+  controller.put(req, res);
 });
 
-router.get("/gst", (req, res) => {
-  controller.getGST(req, res);
+router.get("/", (req, res) => {
+  controller.get(req, res);
 });
 
 export default router;
