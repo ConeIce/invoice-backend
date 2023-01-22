@@ -1,4 +1,16 @@
 export default (invoiceData, customerData, user) => {
+  const subTotal = invoiceData.items.reduce((acc, curr) => {
+    return acc + curr.cost * curr.quantity;
+  }, 0);
+
+  const discount =
+    invoiceData.discountPercentage &&
+    (invoiceData.discountPercentage / 100) * subTotal;
+
+  const tax = invoiceData.tax && (invoiceData.tax / 100) * subTotal;
+
+  const total = subTotal - discount + tax;
+
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -74,12 +86,10 @@ export default (invoiceData, customerData, user) => {
             </p>
           </div>
           <div class="flex flex-col grow items-end">
-            <p>Subtotal: $${invoiceData.items.reduce((acc, curr) => {
-              return acc + curr.cost * curr.quantity;
-            }, 0)}</p>
-            <p>Discount: 100</p>
-            <p>Tax: 12</p>
-            <p class="font-bold">Total: 3001</p>
+            <p>Subtotal: $${subTotal.toFixed(2)}</p>
+            <p>Discount: $${discount.toFixed(2)}</p>
+            <p>Tax: $${tax.toFixed(2)}</p>
+            <p class="font-bold">Total: $${total.toFixed(2)}</p>
           </div>
         </div>
       </main>

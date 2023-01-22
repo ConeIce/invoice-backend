@@ -5,20 +5,24 @@ import puppeteer from "puppeteer";
 import generateInvoiceHTML from "./helpers/generateInvoiceHTML.js";
 
 export default {
+  put: async (req, res) => {
+    const editedInvoice = await Invoice.updateOne(
+      { _id: req.params.id },
+      { discountPercentage: req.body.discount, tax: req.body.tax }
+    );
+    res.json(editedInvoice);
+  },
   getAll: async (req, res) => {
     const invoices = await Invoice.find({ userId: req.user.id });
     res.json(invoices);
   },
   getByID: async (req, res) => {
-    await Invoice.findOne(
-      { _id: req.params.id, userId: req.user.id },
-      (err, invoice) => {
-        if (err) throw err;
-        if (invoice) {
-          res.json(invoice);
-        }
-      }
-    );
+    const invoice = await Invoice.findOne({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    res.json(invoice);
   },
   getByCustomerId: async (req, res) => {
     const invoices = await Invoice.find({

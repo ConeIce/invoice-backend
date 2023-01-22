@@ -12,6 +12,8 @@ const Invoice = mongoose.Schema({
   name: { type: String, required: true },
   date: { type: Date, required: true },
   items: [Item],
+  discountPercentage: { type: Number },
+  tax: { type: Number },
 });
 
 export default mongoose.model("Invoice", Invoice);
