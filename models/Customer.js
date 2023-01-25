@@ -1,6 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-const autoIncrement = require("mongoose-auto-increment");
-autoIncrement.initialize(mongoose.connection);
 
 const Customer = mongoose.Schema({
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -18,11 +16,6 @@ const Customer = mongoose.Schema({
       ref: "invoice",
     },
   ],
-});
-
-Customer.plugin(autoIncrement.plugin, {
-  model: "Customer",
-  field: "customer_id",
 });
 
 export default mongoose.model("Customer", Customer);
