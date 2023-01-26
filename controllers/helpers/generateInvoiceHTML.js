@@ -22,16 +22,14 @@ export default (invoiceData, customerData, user) => {
       <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="text-xs">
-      <header class="bg-sky-900 text-white flex justify-between px-20 py-10">
-        <div>
-          <div class="company-logo h-20 w-20 bg-white"></div>
-          <h1>Compnay name</h1>
-        </div>
-  
+      <header class="bg-sky-900 text-white px-20 py-10">
         <div class="content">
-          <h1 class="text-2xl mb-3">Tax Invoice</h1>
-  
-          <p>Invoice number: ${invoiceData.invoiceNumber}</p>
+          <h1 class="text-2xl font-bold">Tax Invoice</h1>
+          <h2 class="text-xl mb-3">${user.name}</h2>
+          
+          <h2 class="text-xl mb-3">${invoiceData.name}</h2>
+
+          <p>Invoice number: #00${invoiceData.invoiceNo}</p>
           <p>Invoice Date: ${invoiceData.date}</p>
           <p>Email: ${user.email}</p>
           <p>GSTIN: ${user.GSTIN}</p>
@@ -42,7 +40,6 @@ export default (invoiceData, customerData, user) => {
           <div class="mb-6">
             <h1 class="text-xl mb-3">Invoice to:</h1>
             <p>Customer Name: ${customerData.name}</p>
-            <p>Company name: ${customerData.companyName}</p>
             <p>Phone: ${customerData.phone}</p>
             <p>Email: ${customerData.email}</p>
           </div>

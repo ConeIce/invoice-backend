@@ -31,13 +31,17 @@ export default {
     res.json(invoices);
   },
   post: async (req, res) => {
-    req.body["userId"] = req.user.id;
+    req.body["userId"] = req.user._id;
+    console.log(req.user);
+    const count = await Invoice.countDocuments({ userId: req.user._id });
     const newInvoice = new Invoice(req.body);
+    newInvoice.invoiceNo = count + 1;
     const savedInvoice = await newInvoice.save();
 
     res.json(savedInvoice);
   },
   download: async (req, res) => {
+    console.log(req.user.id);
     try {
       const invoiceData = await Invoice.findOne({ _id: req.params.id });
       const customerData = await Customer.findOne({

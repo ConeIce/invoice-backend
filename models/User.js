@@ -8,6 +8,7 @@ const User = mongoose.Schema({
   accountNumber: { type: String },
   accountName: { type: String },
   branchName: { type: String },
+  name: { type: String },
 });
 
 export default mongoose.model("User", User);
