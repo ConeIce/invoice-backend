@@ -9,6 +9,7 @@ const Customer = mongoose.Schema({
   state: { type: String, required: true },
   country: { type: String, required: true },
   companyName: { type: String },
+  GSTIN: { type: String },
 
   invoices: [
     {

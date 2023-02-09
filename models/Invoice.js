@@ -12,8 +12,8 @@ const Invoice = mongoose.Schema({
   customerId: { type: Schema.Types.ObjectId, ref: "Customer" }, // all invoices are and must be mapped to a customer
   date: { type: Date, required: true },
   items: [Item],
-  discountPercentage: { type: Number },
-  tax: { type: Number },
+  discount: { type: Number, required: true },
+  tax: { type: Number, required: true },
 });
 
 export default mongoose.model("Invoice", Invoice);

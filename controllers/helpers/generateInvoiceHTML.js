@@ -3,11 +3,11 @@ export default (invoiceData, customerData, user) => {
     return acc + curr.cost * curr.quantity;
   }, 0);
 
-  const discount =
-    invoiceData.discountPercentage &&
-    (invoiceData.discountPercentage / 100) * subTotal;
+  console.log(invoiceData);
 
-  const tax = invoiceData.tax && (invoiceData.tax / 100) * subTotal;
+  const discount = (invoiceData.discount / 100) * subTotal;
+
+  const tax = (invoiceData.tax / 100) * subTotal;
 
   const total = subTotal - discount + tax;
 
@@ -26,8 +26,6 @@ export default (invoiceData, customerData, user) => {
         <div class="content">
           <h1 class="text-2xl font-bold">Tax Invoice</h1>
           <h2 class="text-xl mb-3">${user.name}</h2>
-          
-          <h2 class="text-xl mb-3">${invoiceData.name}</h2>
 
           <p>Invoice number: #00${invoiceData.invoiceNo}</p>
           <p>Invoice Date: ${invoiceData.date}</p>
