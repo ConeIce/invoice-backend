@@ -24,8 +24,4 @@ router.post("/", (req, res) => {
   controller.post(req, res);
 });
 
-router.put("/:id", (req, res) => {
-  controller.put(req, res);
-});
-
 export default router;

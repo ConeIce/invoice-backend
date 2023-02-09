@@ -10,7 +10,6 @@ const Invoice = mongoose.Schema({
   invoiceNo: { type: Number, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "Customer" },
   customerId: { type: Schema.Types.ObjectId, ref: "Customer" }, // all invoices are and must be mapped to a customer
-  name: { type: String, required: true },
   date: { type: Date, required: true },
   items: [Item],
   discountPercentage: { type: Number },
