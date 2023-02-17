@@ -1,6 +1,20 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import passport from "passport";
+import { body, validationResult } from "express-validator";
+
+const userValidationRules = () => {
+  return [
+    body("email").isEmail(),
+    body("username").notEmpty(),
+    body("password").isLength({ min: 8 }),
+    body("GSTIN").optional().isLength({ min: 15, max: 15 }),
+    body("accountNumber").optional().isLength({ min: 8, max: 20 }),
+    body("accountName").optional().notEmpty(),
+    body("branchName").optional().notEmpty(),
+    body("name").optional().notEmpty(),
+  ];
+};
 
 const handleLogin = (req, res, next) => {
   try {
@@ -32,29 +46,30 @@ const userExists = (username) => {
   });
 };
 
-const hashPassword = async (password) => {
-  const hashedPassword = await bcrypt.hash(password, 10);
-  return hashedPassword;
-};
-
-const saveUser = async (username, email, password) => {
-  const newUser = newUser({
-    username,
-    email,
-    password,
-  });
-
-  await newUser.save((err) => {
-    if (err) throw err;
-
-    res.send("User Created");
-  });
-};
-
-const registerUser = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   if (userExists(req.body.username)) {
-    const hashedPassword = hashPassword(req.body.password);
-    saveUser(req.body.username, req.body.email, hashedPassword);
+    try {
+      await Promise.all(userValidationRules().map((rule) => rule.run(req)));
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const newUser = newUser({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+
+      await newUser.save((err) => {
+        if (err) next(err);
+
+        res.send("User Created");
+      });
+    } catch (error) {
+      next(error);
+    }
   } else {
     res.send("User already exists");
   }
@@ -62,5 +77,5 @@ const registerUser = async (req, res, next) => {
 
 export default {
   login: handleLogin,
-  register: registerUser,
+  register: createUser,
 };
