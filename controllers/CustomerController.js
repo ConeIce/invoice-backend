@@ -13,15 +13,19 @@ const customerValidationRules = () => {
   ];
 };
 
+const validateCustomer = async (req) => {
+  await Promise.all(customerValidationRules().map((rule) => rule.run(req)));
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    res.send("Validation error");
+  }
+};
+
 const createCustomer = async (req, res, next) => {
   try {
     req.body["userId"] = req.user.id;
-    await Promise.all(customerValidationRules().map((rule) => rule.run(req)));
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
+    await validateCustomer(req);
 
     const newCustomer = new Customer(req.body);
     const savedCustomer = await newCustomer.save();

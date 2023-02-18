@@ -46,23 +46,31 @@ const userExists = (username) => {
   });
 };
 
+const validateUser = async (req) => {
+  await Promise.all(userValidationRules().map((rule) => rule.run(req)));
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    res.send("Validation error");
+  }
+};
+
+const saveUser = async (req) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const newUser = newUser({
+    username: req.body.username,
+    email: req.body.email,
+    password: hashedPassword,
+  });
+
+  await newUser.save();
+};
+
 const createUser = async (req, res, next) => {
   if (userExists(req.body.username)) {
     try {
-      await Promise.all(userValidationRules().map((rule) => rule.run(req)));
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-      }
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newUser = newUser({
-        username: req.body.username,
-        email: req.body.email,
-        password: hashedPassword,
-      });
-
-      await newUser.save();
+      await validateUser(req);
+      await saveUser(req);
       res.send("User Created");
     } catch (error) {
       next(error);
