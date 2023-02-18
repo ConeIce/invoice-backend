@@ -3,7 +3,7 @@ import controller from "../controllers/CustomerController.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/page/:page", (req, res) => {
   controller.getAll(req, res);
 });
 
@@ -12,7 +12,6 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/search/:term", (req, res) => {
-  console.log("Sear");
   controller.search(req, res);
 });
 

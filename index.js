@@ -4,6 +4,9 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+import winston from "winston";
+import expressWinston from "express-winston";
+
 import passport from "passport";
 import passportLocal from "passport-local";
 
@@ -46,6 +49,23 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store,
+  })
+);
+
+app.use(
+  expressWinston.logger({
+    transports: [
+      new winston.transports.File({ filename: "logfile.log" }),
+      new winston.transports.Console(),
+    ],
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.json()
+    ),
+    meta: true,
+    msg: "HTTP {{req.method}} {{req.url}}",
+    expressFormat: true,
+    colorize: true,
   })
 );
 
