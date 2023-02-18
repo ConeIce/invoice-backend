@@ -52,17 +52,22 @@ app.use(
   })
 );
 
-// app.use(
-//   expressWinston.logger({
-//     transports: [new winston.transports.Console()],
-//     format: winston.format.combine(
-//       winston.format.colorize(),
-//       winston.format.json()
-//     ),
-//     meta: true,
-
-//   })
-// );
+app.use(
+  expressWinston.logger({
+    transports: [
+      new winston.transports.File({ filename: "logfile.log" }),
+      new winston.transports.Console(),
+    ],
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.json()
+    ),
+    meta: true,
+    msg: "HTTP {{req.method}} {{req.url}}",
+    expressFormat: true,
+    colorize: true,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
