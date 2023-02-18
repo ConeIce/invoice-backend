@@ -11,6 +11,11 @@ router.get("/:id", (req, res) => {
   controller.getByID(req, res);
 });
 
+router.get("/search/:term", (req, res) => {
+  console.log("Sear");
+  controller.search(req, res);
+});
+
 router.post("/", (req, res) => {
   controller.post(req, res);
 });

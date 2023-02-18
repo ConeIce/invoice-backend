@@ -5,6 +5,13 @@ export default {
     const customers = await Customer.find({ userId: req.user.id });
     res.json(customers);
   },
+  search: async (req, res) => {
+    const results = await Customer.find({
+      $text: { $search: req.params.term },
+      userId: req.user.id,
+    });
+    res.json(results);
+  },
   getByID: async (req, res) => {
     const customer = await Customer.findOne({
       _id: req.params.id,

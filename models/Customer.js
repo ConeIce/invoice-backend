@@ -19,4 +19,13 @@ const Customer = mongoose.Schema({
   ],
 });
 
+Customer.index({
+  name: "text",
+  email: "text",
+  country: "text",
+  state: "text",
+  city: "text",
+  companyName: "text",
+});
+
 export default mongoose.model("Customer", Customer);
