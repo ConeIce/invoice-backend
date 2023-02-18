@@ -35,7 +35,7 @@ const createCustomer = async (req, res, next) => {
 const getPaginatedCustomers = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 5;
 
     const count = await Customer.countDocuments({ userId: req.user.id });
     const customers = await Customer.find({ userId: req.user.id })

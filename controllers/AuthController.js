@@ -19,18 +19,18 @@ const userValidationRules = () => {
 const handleLogin = (req, res, next) => {
   try {
     passport.authenticate("local", (err, user) => {
-      if (err) return next(err);
+      if (err) throw err;
 
       if (!user) {
-        res.send(401, { success: false, message: "Authentication failed" });
+        res.send("No User Exists");
       }
 
-      req.login(user, (err) => {
-        if (err) return next(err);
+      req.logIn(user, (err) => {
+        if (err) throw err;
 
-        res.status(200).send("Successfully Authenticated");
+        res.send("Successfully Authenticated");
       });
-    });
+    })(req, res, next);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
@@ -62,11 +62,8 @@ const createUser = async (req, res, next) => {
         password: hashedPassword,
       });
 
-      await newUser.save((err) => {
-        if (err) next(err);
-
-        res.send("User Created");
-      });
+      await newUser.save();
+      res.send("User Created");
     } catch (error) {
       next(error);
     }

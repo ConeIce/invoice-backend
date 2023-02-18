@@ -3,7 +3,7 @@ import controller from "../controllers/CustomerController.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/:page", (req, res) => {
   controller.getAll(req, res);
 });
 
