@@ -25,7 +25,7 @@ const createCustomer = async (req, res) => {
     const errors = await validateCustomer(req, res);
 
     if (!errors.isEmpty()) {
-      res.send(errors);
+      res.status(400).send(errors);
       return;
     }
     const newCustomer = new Customer(req.body);
@@ -37,7 +37,7 @@ const createCustomer = async (req, res) => {
   }
 };
 
-const getPaginatedCustomers = async (req, res) => {
+const getAllPaginated = async (req, res) => {
   try {
     const page = parseInt(req.params.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
@@ -45,7 +45,8 @@ const getPaginatedCustomers = async (req, res) => {
     const count = await Customer.countDocuments({ userId: req.user.id });
     const customers = await Customer.find({ userId: req.user.id })
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
     res.json({
       customers,
@@ -59,7 +60,13 @@ const getPaginatedCustomers = async (req, res) => {
 };
 
 export default {
-  getAll: getPaginatedCustomers,
+  getAll: async (req, res) => {
+    const customers = await Customer.find({
+      userId: req.user.id,
+    });
+    res.json(customers);
+  },
+  getAllPaginated,
   search: async (req, res) => {
     const results = await Customer.find({
       $text: { $search: req.params.term },
